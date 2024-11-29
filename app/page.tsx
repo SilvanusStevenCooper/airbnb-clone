@@ -11,44 +11,49 @@ interface HomeProps {
 }
 
 const Home = async ({ searchParams }: HomeProps) => {
-  const listings = await getListings(searchParams);
-  const currentUser = await getCurrentUser();
+  try {
+    const listings = await getListings(searchParams);
+    const currentUser = await getCurrentUser();
 
-  if (listings.length === 0) {
+    if (listings.length === 0) {
+      return (
+        <ClientOnly>
+          <EmptyState showReset />
+        </ClientOnly>
+      );
+    }
+
     return (
       <ClientOnly>
-        <EmptyState showReset />
-      </ClientOnly>
-    );
-  }
-
-  return (
-    <ClientOnly>
-      <Container>
-        <div
-          className="
-          
-        pt-36
-        grid
-        grid-cols-2
-        md:grid-cols-4
-        md:gap-8
-        gap-4
-        "
-        >
-          {listings.map((listing) => {
-            return (
+        <Container>
+          <div
+            className="
+            pt-36
+            grid
+            grid-cols-2
+            md:grid-cols-4
+            md:gap-8
+            gap-4
+          "
+          >
+            {listings.map((listing) => (
               <ListingCard
                 currentUser={currentUser}
                 key={listing.id}
                 data={listing}
               />
-            );
-          })}
-        </div>
-      </Container>
-    </ClientOnly>
-  );
+            ))}
+          </div>
+        </Container>
+      </ClientOnly>
+    );
+  } catch (error) {
+    console.error("Error rendering Home:", error);
+    return (
+      <ClientOnly>
+        <EmptyState title="Error" subtitle="Something went wrong." />
+      </ClientOnly>
+    );
+  }
 };
-
 export default Home;
