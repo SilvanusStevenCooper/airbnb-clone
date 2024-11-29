@@ -105,7 +105,7 @@ const LoginModal = () => {
         className="
       text-neutral-500
       text-center
-      mt-4
+      mt-6
       font-light
       "
       >
