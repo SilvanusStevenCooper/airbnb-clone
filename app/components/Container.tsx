@@ -1,3 +1,5 @@
+"use client";
+
 const Container = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
