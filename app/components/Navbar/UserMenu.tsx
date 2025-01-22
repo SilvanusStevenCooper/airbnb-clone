@@ -2,7 +2,7 @@
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItems";
-import { useCallback, useState } from "react";
+import { ElementRef, useCallback, useEffect, useRef, useState } from "react";
 
 import useRegisterModel from "@/app/hooks/useRegisterModel";
 import useLoginModel from "@/app/hooks/useLoginModel";
@@ -33,8 +33,22 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     rentModel.onOpen();
   }, [currentUser, loginModel, rentModel]);
 
+  const closeRef = useRef<ElementRef<"div">>(null);
+
+  const onClickOutside = (event: MouseEvent) => {
+    if (closeRef.current && !closeRef.current.contains(event.target as Node)) {
+      toggleOpen();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", onClickOutside);
+
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  });
+
   return (
-    <div className="relative">
+    <div ref={closeRef} className="relative">
       {/* listing creation clickable div */}
       <div className="flex flex-row items-center gap-3">
         <div
