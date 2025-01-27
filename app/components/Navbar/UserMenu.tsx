@@ -37,7 +37,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 
   const onClickOutside = (event: MouseEvent) => {
     if (closeRef.current && !closeRef.current.contains(event.target as Node)) {
-      toggleOpen();
+      setIsOpen(false);
     }
   };
 

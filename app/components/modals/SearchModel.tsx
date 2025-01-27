@@ -138,7 +138,7 @@ const SearchModel = () => {
 
   if (step === STEPS.DATE) {
     bodyContent = (
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col ">
         <Heading
           title="When do you plan to travel"
           subtitle="Make sure to choose a time that suits everyone"
